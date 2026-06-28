@@ -1,0 +1,124 @@
+$background-color: lightgray;
+$text-color: black;
+$subs-width: 300px;
+
+:host {
+  display: flex;
+  height: 100vh;
+  max-height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  overflow: hidden;
+  position: relative;
+  background: $background-color;
+  color: $text-color;
+
+  --video-player-width: 100vw;
+
+  &.subs-visible {
+    --video-player-width: calc(100vw - #{$subs-width});
+  }
+}
+
+.video-player {
+  flex: 1;
+  max-width: var(--video-player-width);
+  max-height: 100%;
+  width: var(--video-player-width);
+  height: 100%;
+  object-fit: contain;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: $background-color;
+
+  transition: opacity 0.5s ease-in-out;
+}
+
+.popup {
+  z-index: 1000;
+  background: $background-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 0 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .popup-content {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+  }
+
+  .tools {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
+}
+
+.select-file-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+
+  input {
+    width: 100%;
+  }
+}
+
+mat-form-field {
+  margin-top: 24px;
+}
+
+.subs-wrapper {
+  width: $subs-width;
+  height: 100%;
+  padding: 8px;
+}
+
+.subs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  max-height: 100vh;
+  overflow-y: auto;
+
+  .subs-item {
+    display: flex;
+    gap: 8px;
+
+    .time {
+      color: gray;
+      font-size: 10px;
+    }
+
+    &.current {
+      font-weight: bold;
+    }
+  }
+}

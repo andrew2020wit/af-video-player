@@ -1,59 +1,94 @@
 # AfVideoPlayer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.4.
+This is a web-based video player focused on watching movies with subtitles.
 
-## Development server
+The main feature is the unique subtitle functionality:
 
-To start a local development server, run:
+1. Subtitles are displayed in a column.
+2. Secondary subtitles are displayed as a translation tooltip when hovering over a subtitle.
+3. Clicking a word in a subtitle opens an online dictionary for that word in a new tab. You can define your own online dictionary in the settings.
+
+This player has its drawbacks and is not intended for mass use.
+I wrote it for personal use.
+
+Use of this player by others assumes certain technical skills and a willingness to figure things out.
+
+## Screenshots
+
+![Screenshot](./screens/1-open-popup.png)
+![Screenshot](./screens/2-pause.png)
+![Screenshot](./screens/3-tooltip.png)
+
+## All Features
+
+1. Subtitles are displayed in a column.
+2. Secondary subtitles are displayed as a translation tooltip when hovering over a subtitle.
+3. Clicking a word in a subtitle opens an online dictionary for that word in a new tab. You can define your own online dictionary in the settings.
+4. Remembers the position of the last watched video (by filename).
+5. Hotkeys.
+
+## Hotkeys
+
+- S - show/hide subtitles
+- Space - play/pause (also works by clicking the video)
+- ArrowLeft - seek backward
+- ArrowRight - seek forward
+
+## Limitations
+
+### Only videos supported by the web browser are supported
+
+You can check browser support by dragging the video file into a new tab - it should play without errors.
+
+Ensure the site has permission to play audio.
+
+The ideal standard for web video, guaranteed to play everywhere with sound, is H.264 video and AAC audio in an MP4 container.
+
+You might need to re-encode your video or audio.
+
+See also the project with some scripts for re-encoding: [af-ffmpeg](https://github.com/andrew2020wit/af-ffmpeg)
+
+### Only the default audio track is supported
+
+Web browsers do not support switching audio tracks for local video files well.
+The default audio track will always be played.
+
+You can change the default audio track using scripts or video editors.
+
+See also the project with some scripts for re-encoding: [af-ffmpeg](https://github.com/andrew2020wit/af-ffmpeg)
+
+### Only external subtitles in VTT format
+
+The application displays all subtitles at once, so embedded subtitles are not supported.
+
+Subtitles must be in a separate VTT file.
+
+You can export subtitles from a video file to VTT format using programs like [SubtitleEdit](https://github.com/SubtitleEdit/subtitleedit) or scripts.
+
+See also the project with some scripts: [af-ffmpeg](https://github.com/andrew2020wit/af-ffmpeg)
+
+## Tips
+
+1. On Windows, Microsoft Edge supports more video and audio formats than other browsers.
+2. Use the standard browser feature to enter fullscreen mode.
+
+## Some ffmpeg scripts
+
+See also:
+
+[af-ffmpeg](https://github.com/andrew2020wit/af-ffmpeg)
+
+[https://www.ffmpeg.org/](https://www.ffmpeg.org/)
+
+### Video re-encoding
 
 ```bash
-ng serve
+ ffmpeg -i input.mov -c:v libx264 -profile:v high -level 4.2 -pix_fmt yuv420p -c:a aac -b:a 128k output.mp4
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Audio re-encoding only
 
 ```bash
-ng generate component component-name
+ffmpeg -i input.mp4 -c:v copy -c:a aac output.mp4
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
