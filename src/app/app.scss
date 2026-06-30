@@ -18,6 +18,10 @@ $subs-width: 300px;
   &.subs-visible {
     --video-player-width: calc(100vw - #{$subs-width});
   }
+
+  &.hide-mouse {
+    cursor: none;
+  }
 }
 
 .video-player {

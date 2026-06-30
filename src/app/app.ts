@@ -41,17 +41,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   host: {
     '(document:mousemove)': 'onMouseMove()',
     '[class.subs-visible]': 'subtitlesVisible()',
+    '[class.hide-mouse]': '!panelVisible()',
   },
 })
 export class App implements OnInit, AfterViewInit {
   public readonly subtitlesVisible = signal(true);
+  public readonly panelVisible = signal(true);
 
   protected readonly isPlaying = signal(false);
   protected readonly videoFileIsSelected = signal(false);
   protected readonly showOpenFilesPopup = signal(true);
   protected readonly currentTime = signal(0);
   protected readonly duration = signal(0);
-  protected readonly panelVisible = signal(true);
   protected readonly currentSubStartTime = signal(0);
 
   protected readonly defaultDictionaryUrl = 'https://www.ldoceonline.com/dictionary/{{term}}';
