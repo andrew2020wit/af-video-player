@@ -1,5 +1,7 @@
 # AfVideoPlayer
 
+[https://andrew2020wit.github.io/af-video-player/](https://andrew2020wit.github.io/af-video-player/)
+
 This is a web-based video player focused on watching movies with subtitles.
 
 The main feature is the unique subtitle functionality:
