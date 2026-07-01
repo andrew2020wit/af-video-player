@@ -1,6 +1,6 @@
 $background-color: lightgray;
 $text-color: black;
-$subs-width: 300px;
+$subs-width: 340px;
 
 :host {
   display: flex;
@@ -101,14 +101,11 @@ mat-form-field {
 .subs-wrapper {
   width: $subs-width;
   height: 100%;
-  padding: 8px;
 }
 
 .subs-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-
   max-height: 100vh;
   overflow-y: auto;
 
@@ -116,13 +113,20 @@ mat-form-field {
     display: flex;
     gap: 8px;
 
+    padding: 4px 8px;
+
     .time {
       color: gray;
       font-size: 10px;
     }
 
+    .text {
+      font-size: 16px;
+    }
+
     &.current {
-      font-weight: bold;
+      //font-weight: bold;
+      background-color: ghostwhite;
     }
   }
 }
