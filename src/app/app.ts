@@ -110,6 +110,16 @@ export class App implements OnInit, AfterViewInit {
     this.play();
   }
 
+  protected goTo(timeMs: number): void {
+    const videoElement = this.videoElement;
+
+    if (!videoElement) return;
+
+    videoElement.currentTime = timeMs / 1000;
+    this.play();
+    this.scrollToCurrentSub();
+  }
+
   protected scrollToCurrentSub(): void {
     const currentTime = this.videoElement?.currentTime;
 

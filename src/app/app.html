@@ -18,7 +18,10 @@
           [class.current]="sub.startTimeMs === currentSubStartTime()"
           [attr.data-sub-item-start-time]="sub.startTimeMs.toString()"
         >
-          <span class="time">{{ sub.startTimeMs | formatDuration }}</span>
+          <span class="time" style="cursor: pointer" (click)="goTo(sub.startTimeMs)">
+            {{ sub.startTimeMs | formatDuration }}
+          </span>
+
           <span class="text" (click)="takeSelectedWord()">{{ sub.text }}</span>
         </div>
       }
