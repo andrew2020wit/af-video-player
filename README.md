@@ -4,30 +4,25 @@
 
 This is a web-based video player focused on watching movies with subtitles.
 
-The main feature is the unique subtitle functionality:
-
-1. Subtitles are displayed in a column.
-2. Secondary subtitles are displayed as a translation tooltip when hovering over a subtitle.
-3. Clicking a word in a subtitle opens an online dictionary for that word in a new tab. You can define your own online dictionary in the settings.
-
 This player has its drawbacks and is not intended for mass use.
 I wrote it for personal use.
 
 Use of this player by others assumes certain technical skills and a willingness to figure things out.
+
+## Features
+
+1. Subtitles are displayed in a column.
+2. Secondary subtitles are displayed as a translation tooltip when hovering over a subtitle.
+3. Clicking a word in a subtitle opens an online dictionary for that word in a new tab. You can define your own online dictionary in the settings.
+4. Click on the subtitle time to go to that point in the video.
+5. Remembers the position of the last watched video (by filename).
+6. Hotkeys.
 
 ## Screenshots
 
 ![Screenshot](./screens/1-open-popup.png)
 ![Screenshot](./screens/2-pause.png)
 ![Screenshot](./screens/3-tooltip.png)
-
-## All Features
-
-1. Subtitles are displayed in a column.
-2. Secondary subtitles are displayed as a translation tooltip when hovering over a subtitle.
-3. Clicking a word in a subtitle opens an online dictionary for that word in a new tab. You can define your own online dictionary in the settings.
-4. Remembers the position of the last watched video (by filename).
-5. Hotkeys.
 
 ## Hotkeys
 
