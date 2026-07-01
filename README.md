@@ -1,4 +1,4 @@
-# AfVideoPlayer
+# AFVideoPlayer
 
 [https://andrew2020wit.github.io/af-video-player/](https://andrew2020wit.github.io/af-video-player/)
 
