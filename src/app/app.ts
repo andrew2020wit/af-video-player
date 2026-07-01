@@ -111,26 +111,30 @@ export class App implements OnInit, AfterViewInit {
   }
 
   protected scrollToCurrentSub(): void {
-    setTimeout(() => {
-      const currentTime = this.videoElement?.currentTime;
+    const currentTime = this.videoElement?.currentTime;
 
-      if (!currentTime) return;
+    if (!currentTime) return;
 
-      const allSubtitles = this.subtitles.allSubtitles();
-      const sub = allSubtitles.find((sub) => sub.endTimeMs > currentTime * 1000);
+    const allSubtitles = this.subtitles.allSubtitles();
+    const sub = allSubtitles.find((sub) => sub.endTimeMs >= currentTime * 1000);
 
-      if (!sub) return;
+    if (!sub) return;
 
-      const el = document.querySelector(
-        `[data-sub-item-start-time="${sub.startTimeMs.toString()}"]`,
-      );
+    const currentSubStartTime = sub.startTimeMs;
 
-      if (!el) return;
+    if (currentSubStartTime === this.currentSubStartTime()) {
+      return;
+    }
 
-      this.currentSubStartTime.set(sub.startTimeMs);
+    this.currentSubStartTime.set(currentSubStartTime);
 
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 200);
+    const el = document.querySelector(
+      `[data-sub-item-start-time="${currentSubStartTime.toString()}"]`,
+    );
+
+    if (!el) return;
+
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   protected takeSelectedWord(): void {
