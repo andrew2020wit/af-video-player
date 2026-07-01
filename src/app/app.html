@@ -16,7 +16,9 @@
           class="subs-item"
           [matTooltip]="sub.tooltip"
           [class.current]="sub.startTimeMs === currentSubStartTime()"
+          [class.user-select]="sub.startTimeMs === userSelectSubStartTime()"
           [attr.data-sub-item-start-time]="sub.startTimeMs.toString()"
+          (contextmenu)="userSelectSubStartTime.set(sub.startTimeMs); $event.preventDefault()"
         >
           <span class="time" style="cursor: pointer" (click)="goTo(sub.startTimeMs)">
             {{ sub.startTimeMs | formatDuration }}

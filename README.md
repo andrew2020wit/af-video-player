@@ -11,12 +11,13 @@ Use of this player by others assumes certain technical skills and a willingness 
 
 ## Features
 
-1. Subtitles are displayed in a column.
-2. Secondary subtitles are displayed as a translation tooltip when hovering over a subtitle.
-3. Clicking a word in a subtitle opens an online dictionary for that word in a new tab. You can define your own online dictionary in the settings.
-4. Click on the subtitle time to go to that point in the video.
-5. Remembers the position of the last watched video (by filename).
-6. Hotkeys.
+- Subtitles are displayed in a column.
+- Secondary subtitles are displayed as a translation tooltip when hovering over a subtitle.
+- Clicking a word in a subtitle opens an online dictionary for that word in a new tab. You can define your own online dictionary in the settings.
+- Click on the subtitle time to go to that point in the video.
+- Right-click on the subtitle to mark it.
+- Remembers the position of the last watched video (by filename).
+- Hotkeys.
 
 ## Screenshots
 

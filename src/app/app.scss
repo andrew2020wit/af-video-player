@@ -125,8 +125,11 @@ mat-form-field {
     }
 
     &.current {
-      //font-weight: bold;
       background-color: ghostwhite;
+    }
+
+    &.user-select {
+      font-weight: bold;
     }
   }
 }

@@ -54,6 +54,7 @@ export class App implements OnInit, AfterViewInit {
   protected readonly currentTime = signal(0);
   protected readonly duration = signal(0);
   protected readonly currentSubStartTime = signal(0);
+  protected readonly userSelectSubStartTime = signal(0);
 
   protected readonly defaultDictionaryUrl = 'https://www.ldoceonline.com/dictionary/{{term}}';
   protected readonly progressBarId = 'video-player-progress-bar';
