@@ -80,6 +80,9 @@ export class App implements OnInit, AfterViewInit {
   private readonly lastFileNameLocalStorageKey = 'last-file-name-af-video-player';
   private readonly lastFilePositionLocalStorageKey = 'last-file-position-af-video-player';
 
+  protected readonly lastFileName = localStorage.getItem(this.lastFileNameLocalStorageKey);
+  private readonly lastFilePosition = localStorage.getItem(this.lastFilePositionLocalStorageKey);
+
   // constructor() {
   //   effect(() => {
   //     console.log(this.subtitles.allSubtitles());
@@ -127,7 +130,16 @@ export class App implements OnInit, AfterViewInit {
     if (!currentTime) return;
 
     const allSubtitles = this.subtitles.allSubtitles();
-    const sub = allSubtitles.find((sub) => sub.endTimeMs >= currentTime * 1000);
+
+    let subIndex = allSubtitles.findIndex((sub) => sub.startTimeMs > currentTime * 1000);
+
+    subIndex -= 1;
+
+    if (subIndex < 0) {
+      subIndex = 0;
+    }
+
+    const sub = allSubtitles[subIndex];
 
     if (!sub) return;
 
@@ -200,11 +212,8 @@ export class App implements OnInit, AfterViewInit {
     this.setTitle(file.name);
     this.isPlaying.set(false);
 
-    const lastFileName = localStorage.getItem(this.lastFileNameLocalStorageKey);
-    const lastFilePosition = localStorage.getItem(this.lastFilePositionLocalStorageKey);
-
-    if (lastFileName === file.name && lastFilePosition) {
-      this.videoElement.currentTime = parseFloat(lastFilePosition);
+    if (this.lastFileName === file.name && this.lastFilePosition) {
+      this.videoElement.currentTime = parseFloat(this.lastFilePosition);
     }
 
     localStorage.setItem(this.lastFileNameLocalStorageKey, file.name);

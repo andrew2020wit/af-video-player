@@ -76,6 +76,11 @@
 @if (showOpenFilesPopup()) {
   <div class="popup open-files">
     <div class="popup-content">
+      <div class="last-file-name">
+        @if (lastFileName) {
+          <span> Last file name: {{ lastFileName }}</span>
+        }
+      </div>
       <div class="select-file-block">
         <label> Select video file </label>
 
