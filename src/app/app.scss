@@ -112,7 +112,12 @@ mat-form-field {
   margin-top: 24px;
 }
 
-.subs-wrapper {
+.subs-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  overflow-y: auto;
+
   width: $subs-width;
   height: 100%;
 
@@ -126,13 +131,6 @@ mat-form-field {
     right: 0;
     bottom: 0;
   }
-}
-
-.subs-list {
-  display: flex;
-  flex-direction: column;
-  max-height: 100vh;
-  overflow-y: auto;
 
   .subs-item {
     display: flex;

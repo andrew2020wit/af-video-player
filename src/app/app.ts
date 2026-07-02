@@ -139,6 +139,10 @@ export class App implements OnInit, AfterViewInit {
 
     let subIndex = allSubtitles.findIndex((sub) => sub.startTimeMs > currentTime * 1000);
 
+    if (subIndex === -1) {
+      return;
+    }
+
     subIndex -= 1;
 
     if (subIndex < 0) {
