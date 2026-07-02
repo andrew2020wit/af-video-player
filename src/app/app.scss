@@ -17,10 +17,12 @@ $subs-width: 340px;
 
   --subs-background-color: unset;
   --current-subs-background-color: ghostwhite;
+  --hover-subs-background-color: unset;
 
   &.mix-subs-mode {
     --subs-background-color: rgba(255, 255, 255, 0.2);
     --current-subs-background-color: rgba(255, 255, 255, 0.4);
+    --hover-subs-background-color: rgba(255, 255, 255, 0.6);
   }
 
   &.subs-visible {
@@ -139,7 +141,6 @@ mat-form-field {
     padding: 4px 8px;
 
     .time {
-      color: gray;
       font-size: 10px;
     }
 
@@ -149,6 +150,10 @@ mat-form-field {
 
     &.current {
       background-color: var(--current-subs-background-color);
+    }
+
+    &:hover {
+      background-color: var(--hover-subs-background-color);
     }
 
     &.user-select {
