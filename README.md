@@ -31,6 +31,7 @@ Use of this player by others assumes certain technical skills and a willingness 
 - Space - play/pause (also works by clicking the video)
 - ArrowLeft - seek backward
 - ArrowRight - seek forward
+- M - mix subs mode (subs on top of video)
 
 ## Limitations
 

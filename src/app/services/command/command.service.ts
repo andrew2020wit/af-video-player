@@ -35,6 +35,11 @@ export class CommandService {
       return;
     }
 
+    if (event.code === 'KeyM') {
+      this.commandsInner$.next(CommandEnum.switchMixSubsMode);
+      return;
+    }
+
     if (event.code === 'ArrowLeft') {
       this.commandsInner$.next(CommandEnum.goBack);
       return;

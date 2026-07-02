@@ -9,7 +9,7 @@
 ></video>
 
 @if (subtitlesVisible()) {
-  <div class="subs-wrapper">
+  <div class="subs-wrapper" [class.mix-subs-mode]="mixSubsMode()">
     <div class="subs-list">
       @for (sub of subtitles.allSubtitles(); track sub.startTimeMs) {
         <div
@@ -57,6 +57,10 @@
     aria-label="Toggle subtitles"
   >
     <mat-icon>{{ subtitlesVisible() ? 'subtitles' : 'subtitles_off' }}</mat-icon>
+  </button>
+
+  <button matMiniFab (click)="mixSubsMode()">
+    <mat-icon>{{ mixSubsMode() ? 'shuffle_on' : 'shuffle' }}</mat-icon>
   </button>
 
   <mat-progress-bar

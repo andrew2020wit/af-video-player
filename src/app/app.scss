@@ -15,8 +15,20 @@ $subs-width: 340px;
 
   --video-player-width: 100vw;
 
+  --subs-background-color: unset;
+  --current-subs-background-color: ghostwhite;
+
+  &.mix-subs-mode {
+    --subs-background-color: rgba(255, 255, 255, 0.2);
+    --current-subs-background-color: rgba(255, 255, 255, 0.4);
+  }
+
   &.subs-visible {
     --video-player-width: calc(100vw - #{$subs-width});
+
+    &.mix-subs-mode {
+      --video-player-width: 100vw;
+    }
   }
 
   &.hide-mouse {
@@ -43,6 +55,8 @@ $subs-width: 340px;
   bottom: 0;
   left: 0;
   right: 0;
+
+  z-index: 1000;
 
   background: $background-color;
 
@@ -101,6 +115,17 @@ mat-form-field {
 .subs-wrapper {
   width: $subs-width;
   height: 100%;
+
+  &.mix-subs-mode {
+    z-index: 10;
+    background: var(--subs-background-color);
+    position: fixed;
+    width: $subs-width;
+    max-width: $subs-width;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 .subs-list {
@@ -125,7 +150,7 @@ mat-form-field {
     }
 
     &.current {
-      background-color: ghostwhite;
+      background-color: var(--current-subs-background-color);
     }
 
     &.user-select {

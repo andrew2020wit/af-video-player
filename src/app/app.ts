@@ -42,11 +42,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     '(document:mousemove)': 'onMouseMove()',
     '[class.subs-visible]': 'subtitlesVisible()',
     '[class.hide-mouse]': '!panelVisible()',
+    '[class.mix-subs-mode]': 'mixSubsMode()',
   },
 })
 export class App implements OnInit, AfterViewInit {
   public readonly subtitlesVisible = signal(true);
   public readonly panelVisible = signal(true);
+  public readonly mixSubsMode = signal(false);
 
   protected readonly isPlaying = signal(false);
   protected readonly videoFileIsSelected = signal(false);
@@ -107,6 +109,10 @@ export class App implements OnInit, AfterViewInit {
     this.hideTimeout = setTimeout(() => {
       this.panelVisible.set(false);
     }, this.hideDelayMs);
+  }
+
+  protected switchMixSubsMode(): void {
+    this.mixSubsMode.update((x) => !x);
   }
 
   protected go(): void {
@@ -329,6 +335,9 @@ export class App implements OnInit, AfterViewInit {
           break;
         case CommandEnum.switchSubs:
           this.toggleSubtitles();
+          break;
+        case CommandEnum.switchMixSubsMode:
+          this.switchMixSubsMode();
           break;
         case CommandEnum.goBack:
           this.goBack();

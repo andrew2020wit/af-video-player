@@ -3,4 +3,5 @@ export enum CommandEnum {
   switchPlayPause = 'switchPlayPause',
   goBack = 'goBack',
   goForward = 'goForward',
+  switchMixSubsMode = 'switchMixSubsMode',
 }
