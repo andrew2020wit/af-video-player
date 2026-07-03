@@ -2,10 +2,12 @@ import {
   AfterViewInit,
   Component,
   DestroyRef,
+  effect,
   ElementRef,
   inject,
   OnInit,
   signal,
+  untracked,
   viewChild,
 } from '@angular/core';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
@@ -57,6 +59,8 @@ export class App implements OnInit, AfterViewInit {
 
   public readonly mixSubsMode = signal(!!this.localStorage.get(LocalStorageKeys.subsMixIsOn));
 
+  protected readonly showSubsPopup = signal(false);
+
   protected readonly isPlaying = signal(false);
   protected readonly videoFileIsSelected = signal(false);
   protected readonly showOpenFilesPopup = signal(true);
@@ -87,6 +91,22 @@ export class App implements OnInit, AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly hideDelayMs = 2000;
+
+  constructor() {
+    effect(() => {
+      if (this.showSubsPopup()) {
+        const subtitlesVisible = untracked(() => this.subtitlesVisible());
+
+        if (subtitlesVisible) {
+          return;
+        }
+
+        setTimeout(() => {
+          this.scrollToCurrentSub(true);
+        }, 100);
+      }
+    });
+  }
 
   public ngOnInit(): void {
     this.commandServiceSubscribe();
@@ -129,7 +149,7 @@ export class App implements OnInit, AfterViewInit {
     this.scrollToCurrentSub();
   }
 
-  protected scrollToCurrentSub(): void {
+  protected scrollToCurrentSub(popupMode = false): void {
     const currentTime = this.videoElement?.currentTime;
 
     if (!currentTime) return;
@@ -154,19 +174,19 @@ export class App implements OnInit, AfterViewInit {
 
     const currentSubStartTime = sub.startTimeMs;
 
-    if (currentSubStartTime === this.currentSubStartTime()) {
+    if (currentSubStartTime === this.currentSubStartTime() && !popupMode) {
       return;
     }
 
     this.currentSubStartTime.set(currentSubStartTime);
 
-    const el = document.querySelector(
-      `[data-sub-item-start-time="${currentSubStartTime.toString()}"]`,
-    );
+    const selectorKey = popupMode ? 'data-popup-sub-item-start-time' : 'data-sub-item-start-time';
+
+    const el = document.querySelector(`[${selectorKey}="${currentSubStartTime.toString()}"]`);
 
     if (!el) return;
 
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.scrollIntoView({ behavior: 'instant', block: 'center' });
   }
 
   protected takeSelectedWord(): void {
@@ -259,11 +279,13 @@ export class App implements OnInit, AfterViewInit {
   protected play(): void {
     this.videoElement?.play();
     this.isPlaying.set(true);
+    this.showSubsPopup.set(false);
   }
 
   protected pause(): void {
     this.videoElement?.pause();
     this.isPlaying.set(false);
+    this.showSubsPopup.set(true);
   }
 
   protected switchPlayPause(): void {

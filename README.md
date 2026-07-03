@@ -19,6 +19,7 @@ Use of this player by others assumes certain technical skills and a willingness 
 - Remembers the position of the last watched video (by filename).
 - Remember the last 20 files (names and positions).
 - Hotkeys.
+- When paused, you see subs popup (if subs off).
 
 ## Screenshots
 

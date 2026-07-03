@@ -129,3 +129,34 @@
     </div>
   </div>
 }
+
+@if (showSubsPopup() && !subtitlesVisible()) {
+  <div class="popup subs">
+    <div class="close-button">
+      <button matMiniFab (click)="switchPlayPause()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="popup-content">
+      <div class="popup-subs-list" [class.mix-subs-mode]="mixSubsMode()">
+        @for (sub of subtitles.allSubtitles(); track sub.startTimeMs) {
+          <div
+            class="subs-item"
+            [matTooltip]="sub.tooltip"
+            [class.current]="sub.startTimeMs === currentSubStartTime()"
+            [class.user-select]="sub.startTimeMs === userSelectSubStartTime()"
+            [attr.data-popup-sub-item-start-time]="sub.startTimeMs.toString()"
+            (contextmenu)="userSelectSubStartTime.set(sub.startTimeMs); $event.preventDefault()"
+          >
+            <span class="time" style="cursor: pointer" (click)="goTo(sub.startTimeMs)">
+              {{ sub.startTimeMs | formatDuration }}
+            </span>
+
+            <span class="text" (click)="takeSelectedWord()">{{ sub.text }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

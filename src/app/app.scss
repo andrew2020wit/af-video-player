@@ -161,3 +161,35 @@ mat-form-field {
     }
   }
 }
+
+.popup-subs-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  overflow-y: auto;
+  height: 100vh;
+
+  .subs-item {
+    display: flex;
+    gap: 8px;
+
+    padding: 4px 8px;
+
+    .time {
+      font-size: 10px;
+      color: gray;
+    }
+
+    .text {
+      font-size: 18px;
+    }
+
+    &.current {
+      background-color: var(--current-subs-background-color);
+    }
+
+    &.user-select {
+      font-weight: bold;
+    }
+  }
+}
