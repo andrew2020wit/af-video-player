@@ -22,6 +22,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { CommandService } from './services/command/command.service';
 import { CommandEnum } from './services/command/enums/command.enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { HistoryService } from './services/history/history-service';
 
 @Component({
   selector: 'app-root',
@@ -74,22 +75,19 @@ export class App implements OnInit, AfterViewInit {
 
   private readonly videoPlayerElementRef = viewChild<ElementRef<HTMLVideoElement>>('videoPlayer');
 
+  private historyService = inject(HistoryService);
+  protected readonly history = signal(this.historyService.getHistory());
+
   private readonly title = inject(Title);
   private readonly commandService = inject(CommandService);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly hideDelayMs = 2000;
-  private readonly lastFileNameLocalStorageKey = 'last-file-name-af-video-player';
-  private readonly lastFilePositionLocalStorageKey = 'last-file-position-af-video-player';
+  // private readonly lastFileNameLocalStorageKey = 'last-file-name-af-video-player';
+  // private readonly lastFilePositionLocalStorageKey = 'last-file-position-af-video-player';
 
-  protected readonly lastFileName = localStorage.getItem(this.lastFileNameLocalStorageKey);
-  private readonly lastFilePosition = localStorage.getItem(this.lastFilePositionLocalStorageKey);
-
-  // constructor() {
-  //   effect(() => {
-  //     console.log(this.subtitles.allSubtitles());
-  //   });
-  // }
+  // protected readonly lastFileName = localStorage.getItem(this.lastFileNameLocalStorageKey);
+  // private readonly lastFilePosition = localStorage.getItem(this.lastFilePositionLocalStorageKey);
 
   public ngOnInit(): void {
     this.commandServiceSubscribe();
@@ -222,15 +220,9 @@ export class App implements OnInit, AfterViewInit {
     this.setTitle(file.name);
     this.isPlaying.set(false);
 
-    if (this.lastFileName === file.name && this.lastFilePosition) {
-      this.videoElement.currentTime = parseFloat(this.lastFilePosition);
-    }
+    const currentTimeMs = this.historyService.setCurrentFileAndReturnCurrentPositionSec(file.name);
 
-    localStorage.setItem(this.lastFileNameLocalStorageKey, file.name);
-    localStorage.setItem(
-      this.lastFilePositionLocalStorageKey,
-      this.videoElement.currentTime.toString(),
-    );
+    this.videoElement.currentTime = currentTimeMs;
   }
 
   protected async onSrtSelected(event: Event, subNumber: SubtitleNumber): Promise<void> {
@@ -253,7 +245,7 @@ export class App implements OnInit, AfterViewInit {
     const currentTime = this.videoElement?.currentTime;
 
     if (currentTime) {
-      localStorage.setItem(this.lastFilePositionLocalStorageKey, currentTime.toString());
+      this.historyService.setCurrentVideoFilePositionSec(currentTime);
     }
 
     this.scrollToCurrentSub();

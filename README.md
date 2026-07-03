@@ -17,6 +17,7 @@ Use of this player by others assumes certain technical skills and a willingness 
 - Click on the subtitle time to go to that point in the video.
 - Right-click on the subtitle to mark it.
 - Remembers the position of the last watched video (by filename).
+- Remember the last 20 files (names and positions).
 - Hotkeys.
 
 ## Screenshots

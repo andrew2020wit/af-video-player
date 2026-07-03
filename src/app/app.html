@@ -78,11 +78,6 @@
 @if (showOpenFilesPopup()) {
   <div class="popup open-files">
     <div class="popup-content">
-      <div class="last-file-name">
-        @if (lastFileName) {
-          <span> Last file name: {{ lastFileName }}</span>
-        }
-      </div>
       <div class="select-file-block">
         <label> Select video file </label>
 
@@ -105,6 +100,17 @@
         <button matButton="filled" (click)="go()" [disabled]="!videoFileIsSelected()">
           Open Video
         </button>
+      </div>
+
+      <div class="history">
+        <h3>History</h3>
+        <div class="history-list">
+          @for (historyItem of history(); track historyItem.fileName) {
+            <div class="history-item">
+              {{ historyItem.fileName }}
+            </div>
+          }
+        </div>
       </div>
 
       <mat-form-field>
