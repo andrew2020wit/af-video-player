@@ -23,6 +23,8 @@ import { CommandService } from './services/command/command.service';
 import { CommandEnum } from './services/command/enums/command.enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HistoryService } from './services/history/history-service';
+import { LocalStorage } from './services/local-storage/local-storage';
+import { LocalStorageKeys } from './services/local-storage/model/local-storage-keys.enum';
 
 @Component({
   selector: 'app-root',
@@ -47,9 +49,13 @@ import { HistoryService } from './services/history/history-service';
   },
 })
 export class App implements OnInit, AfterViewInit {
-  public readonly subtitlesVisible = signal(true);
+  private readonly localStorage = inject(LocalStorage);
+
+  public readonly subtitlesVisible = signal(!!this.localStorage.get(LocalStorageKeys.subsIsOn));
+
   public readonly panelVisible = signal(true);
-  public readonly mixSubsMode = signal(false);
+
+  public readonly mixSubsMode = signal(!!this.localStorage.get(LocalStorageKeys.subsMixIsOn));
 
   protected readonly isPlaying = signal(false);
   protected readonly videoFileIsSelected = signal(false);
@@ -64,10 +70,8 @@ export class App implements OnInit, AfterViewInit {
 
   protected readonly subtitles = inject(Subtitles);
 
-  private readonly dictionaryUrlLocalStorageKey = 'dictionaryUrl-af-video-player';
-
   protected dictionaryUrl = signal(
-    localStorage.getItem(this.dictionaryUrlLocalStorageKey) || this.defaultDictionaryUrl,
+    this.localStorage.get(LocalStorageKeys.dictionaryUrl) || this.defaultDictionaryUrl,
   );
 
   private hideTimeout?: number;
@@ -75,7 +79,7 @@ export class App implements OnInit, AfterViewInit {
 
   private readonly videoPlayerElementRef = viewChild<ElementRef<HTMLVideoElement>>('videoPlayer');
 
-  private historyService = inject(HistoryService);
+  private readonly historyService = inject(HistoryService);
   protected readonly history = signal(this.historyService.getHistory());
 
   private readonly title = inject(Title);
@@ -83,11 +87,6 @@ export class App implements OnInit, AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly hideDelayMs = 2000;
-  // private readonly lastFileNameLocalStorageKey = 'last-file-name-af-video-player';
-  // private readonly lastFilePositionLocalStorageKey = 'last-file-position-af-video-player';
-
-  // protected readonly lastFileName = localStorage.getItem(this.lastFileNameLocalStorageKey);
-  // private readonly lastFilePosition = localStorage.getItem(this.lastFilePositionLocalStorageKey);
 
   public ngOnInit(): void {
     this.commandServiceSubscribe();
@@ -111,6 +110,8 @@ export class App implements OnInit, AfterViewInit {
 
   protected switchMixSubsMode(): void {
     this.mixSubsMode.update((x) => !x);
+
+    this.localStorage.set(LocalStorageKeys.subsMixIsOn, this.mixSubsMode() ? 'true' : '');
   }
 
   protected go(): void {
@@ -181,7 +182,7 @@ export class App implements OnInit, AfterViewInit {
   }
 
   protected setDictionaryUrl(): void {
-    localStorage.setItem(this.dictionaryUrlLocalStorageKey, this.dictionaryUrl());
+    this.localStorage.set(LocalStorageKeys.dictionaryUrl, this.dictionaryUrl());
   }
 
   protected seekTo(ev: MouseEvent): void {
@@ -275,6 +276,7 @@ export class App implements OnInit, AfterViewInit {
 
   protected toggleSubtitles(): void {
     this.subtitlesVisible.update((x) => !x);
+    this.localStorage.set(LocalStorageKeys.subsIsOn, this.subtitlesVisible() ? 'true' : '');
   }
 
   protected reload(): void {
