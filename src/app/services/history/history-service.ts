@@ -22,7 +22,9 @@ export class HistoryService {
     // previous file
     if (fileHistoryItemIndex > -1) {
       // save previous position
-      history[0].positionSec = this.getCurrentVideoFilePositionSec();
+      if (history[0]) {
+        history[0].positionSec = this.getCurrentVideoFilePositionSec();
+      }
 
       // set current file
       const ItemPositionSec = history[fileHistoryItemIndex].positionSec;
@@ -39,7 +41,9 @@ export class HistoryService {
     // new file
 
     // save previous position
-    history[0].positionSec = this.getCurrentVideoFilePositionSec();
+    if (history[0]) {
+      history[0].positionSec = this.getCurrentVideoFilePositionSec();
+    }
 
     history.unshift({ fileName, positionSec: 0 });
     this.setCurrentVideoFilePositionSec(0);
