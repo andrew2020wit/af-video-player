@@ -11,29 +11,25 @@ Use of this player by others assumes certain technical skills and a willingness 
 
 ## Features
 
-- Subtitles are displayed in a column.
-- Secondary subtitles are displayed as a translation tooltip when hovering over a subtitle.
+- Subtitles are displayed in a column and only on pause (sub popup)
 - Clicking a word in a subtitle opens an online dictionary for that word in a new tab. You can define your own online dictionary in the settings.
 - Click on the subtitle time to go to that point in the video.
 - Right-click on the subtitle to mark it.
 - Remembers the position of the last watched video (by filename).
 - Remember the last 20 files (names and positions).
 - Hotkeys.
-- When paused, you see subs popup (if subs off).
 
 ## Screenshots
 
 ![Screenshot](./screens/1-open-popup.png)
-![Screenshot](./screens/2-pause.png)
-![Screenshot](./screens/3-tooltip.png)
+![Screenshot](./screens/2-player.png)
+![Screenshot](./screens/3-subs.png)
 
 ## Hotkeys
 
-- S - show/hide subtitles
 - Space - play/pause (also works by clicking the video)
 - ArrowLeft - seek backward
 - ArrowRight - seek forward
-- M - mix subs mode (subs on top of video)
 
 ## Limitations
 

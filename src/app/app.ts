@@ -45,19 +45,13 @@ import { LocalStorageKeys } from './services/local-storage/model/local-storage-k
   styleUrl: './app.scss',
   host: {
     '(document:mousemove)': 'onMouseMove()',
-    '[class.subs-visible]': 'subtitlesVisible()',
     '[class.hide-mouse]': '!panelVisible()',
-    '[class.mix-subs-mode]': 'mixSubsMode()',
   },
 })
 export class App implements OnInit, AfterViewInit {
   private readonly localStorage = inject(LocalStorage);
 
-  public readonly subtitlesVisible = signal(!!this.localStorage.get(LocalStorageKeys.subsIsOn));
-
   public readonly panelVisible = signal(true);
-
-  public readonly mixSubsMode = signal(!!this.localStorage.get(LocalStorageKeys.subsMixIsOn));
 
   protected readonly showSubsPopup = signal(false);
 
@@ -95,14 +89,8 @@ export class App implements OnInit, AfterViewInit {
   constructor() {
     effect(() => {
       if (this.showSubsPopup()) {
-        const subtitlesVisible = untracked(() => this.subtitlesVisible());
-
-        if (subtitlesVisible) {
-          return;
-        }
-
         setTimeout(() => {
-          this.scrollToCurrentSub(true);
+          this.scrollToCurrentSub();
         }, 100);
       }
     });
@@ -128,12 +116,6 @@ export class App implements OnInit, AfterViewInit {
     }, this.hideDelayMs);
   }
 
-  protected switchMixSubsMode(): void {
-    this.mixSubsMode.update((x) => !x);
-
-    this.localStorage.set(LocalStorageKeys.subsMixIsOn, this.mixSubsMode() ? 'true' : '');
-  }
-
   protected go(): void {
     this.showOpenFilesPopup.set(false);
     this.play();
@@ -149,7 +131,7 @@ export class App implements OnInit, AfterViewInit {
     this.scrollToCurrentSub();
   }
 
-  protected scrollToCurrentSub(popupMode = false): void {
+  protected scrollToCurrentSub(): void {
     const currentTime = this.videoElement?.currentTime;
 
     if (!currentTime) return;
@@ -174,13 +156,9 @@ export class App implements OnInit, AfterViewInit {
 
     const currentSubStartTime = sub.startTimeMs;
 
-    if (currentSubStartTime === this.currentSubStartTime() && !popupMode) {
-      return;
-    }
-
     this.currentSubStartTime.set(currentSubStartTime);
 
-    const selectorKey = popupMode ? 'data-popup-sub-item-start-time' : 'data-sub-item-start-time';
+    const selectorKey = 'data-popup-sub-item-start-time';
 
     const el = document.querySelector(`[${selectorKey}="${currentSubStartTime.toString()}"]`);
 
@@ -296,11 +274,6 @@ export class App implements OnInit, AfterViewInit {
     }
   }
 
-  protected toggleSubtitles(): void {
-    this.subtitlesVisible.update((x) => !x);
-    this.localStorage.set(LocalStorageKeys.subsIsOn, this.subtitlesVisible() ? 'true' : '');
-  }
-
   protected reload(): void {
     window.location.reload();
   }
@@ -352,12 +325,6 @@ export class App implements OnInit, AfterViewInit {
       switch (command) {
         case CommandEnum.switchPlayPause:
           this.switchPlayPause();
-          break;
-        case CommandEnum.switchSubs:
-          this.toggleSubtitles();
-          break;
-        case CommandEnum.switchMixSubsMode:
-          this.switchMixSubsMode();
           break;
         case CommandEnum.goBack:
           this.goBack();

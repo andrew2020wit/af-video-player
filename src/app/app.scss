@@ -19,20 +19,6 @@ $subs-width: 340px;
   --current-subs-background-color: ghostwhite;
   --hover-subs-background-color: unset;
 
-  &.mix-subs-mode {
-    --subs-background-color: rgba(255, 255, 255, 0.2);
-    --current-subs-background-color: rgba(255, 255, 255, 0.4);
-    --hover-subs-background-color: rgba(255, 255, 255, 0.6);
-  }
-
-  &.subs-visible {
-    --video-player-width: calc(100vw - #{$subs-width});
-
-    &.mix-subs-mode {
-      --video-player-width: 100vw;
-    }
-  }
-
   &.hide-mouse {
     cursor: none;
   }
@@ -63,6 +49,10 @@ $subs-width: 340px;
   background: $background-color;
 
   transition: opacity 0.5s ease-in-out;
+
+  .time {
+    white-space: nowrap;
+  }
 }
 
 .popup {
@@ -84,6 +74,22 @@ $subs-width: 340px;
     display: flex;
     flex-direction: column;
     width: 800px;
+  }
+
+  &.subs {
+    justify-content: flex-end;
+
+    padding-right: 0;
+
+    .popup-content {
+      width: 1200px;
+    }
+
+    .no-subs {
+      margin-top: 100px;
+      font-size: 32px;
+      font-weight: bold;
+    }
   }
 
   .tools {
@@ -114,54 +120,6 @@ mat-form-field {
   margin-top: 24px;
 }
 
-.subs-list {
-  display: flex;
-  flex-direction: column;
-  max-height: 100vh;
-  overflow-y: auto;
-
-  width: $subs-width;
-  height: 100%;
-
-  &.mix-subs-mode {
-    z-index: 10;
-    background: var(--subs-background-color);
-    position: fixed;
-    width: $subs-width;
-    max-width: $subs-width;
-    top: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  .subs-item {
-    display: flex;
-    gap: 8px;
-
-    padding: 4px 8px;
-
-    .time {
-      font-size: 10px;
-    }
-
-    .text {
-      font-size: 16px;
-    }
-
-    &.current {
-      background-color: var(--current-subs-background-color);
-    }
-
-    &:hover {
-      background-color: var(--hover-subs-background-color);
-    }
-
-    &.user-select {
-      font-weight: bold;
-    }
-  }
-}
-
 .popup-subs-list {
   display: flex;
   flex-direction: column;
@@ -171,17 +129,22 @@ mat-form-field {
 
   .subs-item {
     display: flex;
-    gap: 8px;
+    gap: 16px;
 
     padding: 4px 8px;
 
     .time {
-      font-size: 10px;
+      font-size: 16px;
       color: gray;
     }
 
     .text {
+      font-size: 22px;
+    }
+
+    .second-sub {
       font-size: 18px;
+      color: darkgray;
     }
 
     &.current {

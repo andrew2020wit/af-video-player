@@ -12,24 +12,29 @@ export class Subtitles {
   public readonly allSubtitles = computed<SubtitleItemExtended[]>(() => {
     const mainSubtitles = this.mainSubtitles();
     const secondSubtitles = this.secondSubtitles();
+    const secondSubtitlesReversed = [...secondSubtitles].reverse();
 
     if (secondSubtitles.length === 0) {
-      return mainSubtitles.map((x) => ({ ...x, tooltip: '' }));
+      return mainSubtitles.map<SubtitleItemExtended>((x) => ({ ...x, secondSub: '' }));
     }
 
-    const getTooltip = (startTimeMs: number, endTimeMs: number): string => {
-      const subItems = secondSubtitles.filter(
-        (x) =>
-          (x.startTimeMs >= startTimeMs && x.startTimeMs <= endTimeMs) ||
-          (x.endTimeMs >= startTimeMs && x.endTimeMs <= endTimeMs),
-      );
+    const getTooltip = (endTimeMs: number, acc: string): string => {
+      const subTime = secondSubtitlesReversed.at(-1)?.startTimeMs;
 
-      return subItems.map((x) => x.text).join('\n');
+      if (!subTime || subTime > endTimeMs) {
+        return acc;
+      }
+
+      const sub = secondSubtitlesReversed.pop();
+
+      const newAcc = acc + (sub?.text ?? '');
+
+      return getTooltip(endTimeMs, newAcc);
     };
 
-    return mainSubtitles.map((sub) => ({
+    return mainSubtitles.map<SubtitleItemExtended>((sub) => ({
       ...sub,
-      tooltip: getTooltip(sub.startTimeMs, sub.endTimeMs),
+      secondSub: getTooltip(sub.endTimeMs, ''),
     }));
   });
 

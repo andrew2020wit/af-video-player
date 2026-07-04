@@ -5,7 +5,7 @@ export type SubtitleItem = {
 };
 
 export type SubtitleItemExtended = SubtitleItem & {
-  tooltip: string;
+  secondSub: string;
 };
 
 export type SubtitleNumber = 'first' | 'second';
