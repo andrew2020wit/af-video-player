@@ -7,7 +7,6 @@ import {
   inject,
   OnInit,
   signal,
-  untracked,
   viewChild,
 } from '@angular/core';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
@@ -20,7 +19,6 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { takeSelectedWord } from './utils/take-selected-word';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { MatTooltip } from '@angular/material/tooltip';
 import { CommandService } from './services/command/command.service';
 import { CommandEnum } from './services/command/enums/command.enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -39,7 +37,6 @@ import { LocalStorageKeys } from './services/local-storage/model/local-storage-k
     MatFormField,
     MatInput,
     FormsModule,
-    MatTooltip,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
