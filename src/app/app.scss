@@ -144,11 +144,15 @@ mat-form-field {
 
     .second-sub {
       font-size: 18px;
-      color: darkgray;
+      color: darkgreen;
     }
 
     &.current {
       background-color: var(--current-subs-background-color);
+    }
+
+    &.last-current {
+      background-color: lightyellow;
     }
 
     &.user-select {

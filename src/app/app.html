@@ -114,6 +114,7 @@
           <div
             class="subs-item"
             [class.current]="sub.startTimeMs === currentSubStartTime()"
+            [class.last-current]="sub.startTimeMs === lastCurrentSubStartTime()"
             [class.user-select]="sub.startTimeMs === userSelectSubStartTime()"
             [attr.data-popup-sub-item-start-time]="sub.startTimeMs.toString()"
             (contextmenu)="userSelectSubStartTime.set(sub.startTimeMs); $event.preventDefault()"

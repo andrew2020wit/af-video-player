@@ -59,6 +59,7 @@ export class App implements OnInit, AfterViewInit {
   protected readonly duration = signal(0);
   protected readonly currentSubStartTime = signal(0);
   protected readonly userSelectSubStartTime = signal(0);
+  protected readonly lastCurrentSubStartTime = signal(0);
 
   protected readonly defaultDictionaryUrl = 'https://www.ldoceonline.com/dictionary/{{term}}';
   protected readonly progressBarId = 'video-player-progress-bar';
@@ -89,6 +90,8 @@ export class App implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.scrollToCurrentSub();
         }, 100);
+      } else {
+        this.lastCurrentSubStartTime.set(this.currentSubStartTime());
       }
     });
   }
@@ -243,8 +246,6 @@ export class App implements OnInit, AfterViewInit {
     if (currentTime) {
       this.historyService.setCurrentVideoFilePositionSec(currentTime);
     }
-
-    this.scrollToCurrentSub();
   }
 
   protected onVideoEnded(): void {
