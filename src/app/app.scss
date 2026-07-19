@@ -64,11 +64,14 @@ $subs-width: 340px;
   right: 0;
   bottom: 0;
 
-  padding: 0 24px;
+  padding: 48px 24px 24px;
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+
+  max-height: 100vh;
+  overflow-y: auto;
 
   .popup-content {
     display: flex;
