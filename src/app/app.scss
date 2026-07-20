@@ -73,6 +73,7 @@ $subs-width: 340px;
   max-height: 100vh;
   height: 100vh;
   overflow-y: auto;
+  box-sizing: border-box;
 
   .popup-content {
     display: flex;
@@ -149,6 +150,10 @@ mat-form-field {
     .second-sub {
       font-size: 18px;
       color: darkgreen;
+
+      &.auto {
+        color: blue;
+      }
     }
 
     &.current {
@@ -163,4 +168,22 @@ mat-form-field {
       font-weight: bold;
     }
   }
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 1px solid gray;
+  margin: 8px 0;
+}
+
+.translation-button {
+  font-size: 16px;
+  background: aqua;
+  cursor: pointer;
+  display: inline-flex;
+  padding: 4px 8px;
+  margin: 0 4px;
 }

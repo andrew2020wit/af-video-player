@@ -25,6 +25,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HistoryService } from './services/history/history-service';
 import { LocalStorage } from './services/local-storage/local-storage';
 import { LocalStorageKeys } from './services/local-storage/model/local-storage-keys.enum';
+import { translateText } from './translate-api/translate-text';
+import { checkTranslationAvailability } from './translate-api/check-translation-availability';
 
 @Component({
   selector: 'app-root',
@@ -54,6 +56,7 @@ export class App implements OnInit, AfterViewInit {
 
   protected readonly isPlaying = signal(false);
   protected readonly videoFileIsSelected = signal(false);
+  protected readonly translationIsAvailable = signal(false);
   protected readonly showOpenFilesPopup = signal(true);
   protected readonly currentTime = signal(0);
   protected readonly duration = signal(0);
@@ -62,6 +65,8 @@ export class App implements OnInit, AfterViewInit {
   protected readonly lastCurrentSubStartTime = signal(0);
 
   protected readonly defaultDictionaryUrl = 'https://www.ldoceonline.com/dictionary/{{term}}';
+  protected readonly defaultSourceLang = 'en';
+  protected readonly defaultTargetLang = 'uk';
   protected readonly progressBarId = 'video-player-progress-bar';
 
   protected readonly subtitles = inject(Subtitles);
@@ -69,6 +74,16 @@ export class App implements OnInit, AfterViewInit {
   protected dictionaryUrl = signal(
     this.localStorage.get(LocalStorageKeys.dictionaryUrl) || this.defaultDictionaryUrl,
   );
+
+  protected sourceLang = signal(
+    this.localStorage.get(LocalStorageKeys.sourceLang) || this.defaultSourceLang,
+  );
+
+  protected targetLang = signal(
+    this.localStorage.get(LocalStorageKeys.targetLang) || this.defaultTargetLang,
+  );
+
+  protected translations = signal<Record<number, string>>({});
 
   private hideTimeout?: number;
   private videoElement: HTMLVideoElement | undefined;
@@ -100,8 +115,24 @@ export class App implements OnInit, AfterViewInit {
     this.commandServiceSubscribe();
   }
 
+  protected async translate(index: number, text: string): Promise<void> {
+    const result = await translateText(text, this.sourceLang(), this.targetLang());
+
+    this.translations.update((x) => ({ ...x, [index]: result }));
+  }
+
   public ngAfterViewInit(): void {
     this.videoElement = this.videoPlayerElementRef()?.nativeElement;
+
+    void this.checkTranslationAvailability();
+  }
+
+  private async checkTranslationAvailability(): Promise<void> {
+    const translationAvailability = await checkTranslationAvailability();
+
+    console.log('translation availability: ', translationAvailability);
+
+    this.translationIsAvailable.set(translationAvailability);
   }
 
   public onMouseMove(): void {
@@ -181,6 +212,14 @@ export class App implements OnInit, AfterViewInit {
 
   protected setDictionaryUrl(): void {
     this.localStorage.set(LocalStorageKeys.dictionaryUrl, this.dictionaryUrl());
+  }
+
+  protected setSourceLang(): void {
+    this.localStorage.set(LocalStorageKeys.sourceLang, this.sourceLang());
+  }
+
+  protected setTargetLang(): void {
+    this.localStorage.set(LocalStorageKeys.targetLang, this.targetLang());
   }
 
   protected seekTo(ev: MouseEvent): void {

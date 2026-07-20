@@ -79,11 +79,11 @@
         </div>
       </div>
 
-      <mat-form-field>
-        <input matInput [placeholder]="defaultDictionaryUrl" [(ngModel)]="dictionaryUrl" />
-      </mat-form-field>
+      <div class="input-wrapper">
+        <mat-form-field>
+          <input matInput [placeholder]="defaultDictionaryUrl" [(ngModel)]="dictionaryUrl" />
+        </mat-form-field>
 
-      <div>
         <button
           matButton="filled"
           (click)="setDictionaryUrl()"
@@ -91,6 +91,30 @@
         >
           Save Dictionary Url
         </button>
+      </div>
+
+      <div class="translation">
+        <h3>Translation</h3>
+
+        <div class="input-wrapper">
+          <mat-form-field>
+            <input matInput [placeholder]="defaultSourceLang" [(ngModel)]="sourceLang" />
+          </mat-form-field>
+
+          <button matButton="filled" (click)="setSourceLang()" [disabled]="!sourceLang()?.trim()">
+            Save source lang
+          </button>
+        </div>
+
+        <div class="input-wrapper">
+          <mat-form-field>
+            <input matInput [placeholder]="defaultTargetLang" [(ngModel)]="targetLang" />
+          </mat-form-field>
+
+          <button matButton="filled" (click)="setTargetLang()" [disabled]="!targetLang()?.trim()">
+            Save target lang
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -110,7 +134,7 @@
           <div class="no-subs">No subtitles, you should select subs files</div>
         }
 
-        @for (sub of subtitles.allSubtitles(); track sub.startTimeMs) {
+        @for (sub of subtitles.allSubtitles(); track sub.startTimeMs; let index = $index) {
           <div
             class="subs-item"
             [class.current]="sub.startTimeMs === currentSubStartTime()"
@@ -123,7 +147,34 @@
               {{ sub.startTimeMs | formatDuration }}
             </span>
 
-            <span class="text" (click)="takeSelectedWord()">{{ sub.text }}</span>
+            <span class="text-wrapper">
+              <span class="text" (click)="takeSelectedWord()">{{ sub.text }}</span>
+
+              @if (translationIsAvailable()) {
+                <span class="translation-button" (click)="translate(index, sub.text)"> T </span>
+              }
+
+              <a
+                class="translation-button"
+                [href]="
+                  'https://translate.google.com/?sl=' +
+                  sourceLang() +
+                  '&tl=' +
+                  targetLang() +
+                  '&text=' +
+                  sub.text
+                "
+                target="_blank"
+              >
+                G
+              </a>
+            </span>
+
+            @if (translations()[index]) {
+              <span class="second-sub auto">
+                {{ translations()[index] }}
+              </span>
+            }
 
             <span class="second-sub">
               {{ sub.secondSub }}

@@ -89,3 +89,18 @@ See also:
 ffmpeg -i input.mp4 -c:v copy -c:a aac output.mp4
 ```
 
+## Google translation
+
+There is a button for the Google translation.
+
+## Translator and Language Detector APIs
+
+It uses experimental "Translator and Language Detector APIs".
+
+It's supported only by Microsoft Edge browser at the moment.
+
+[https://developer.mozilla.org/en-US/docs/Web/API/Translator_and_Language_Detector_APIs](https://developer.mozilla.org/en-US/docs/Web/API/Translator_and_Language_Detector_APIs)
+
+[https://learn.microsoft.com/en-us/microsoft-edge/web-platform/languagedetector-api](https://learn.microsoft.com/en-us/microsoft-edge/web-platform/languagedetector-api)
+
+Then you use it first time it might download model, it takes some time, see console log for details.
