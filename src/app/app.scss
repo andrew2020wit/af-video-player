@@ -138,6 +138,9 @@ mat-form-field {
 
     padding: 4px 8px;
 
+    min-height: 32px;
+    align-items: center;
+
     .time {
       font-size: 16px;
       color: gray;
@@ -186,4 +189,16 @@ mat-form-field {
   display: inline-flex;
   padding: 4px 8px;
   margin: 0 4px;
+}
+
+.text-wrapper {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+
+  &:not(:hover) {
+    .translation-button {
+      display: none;
+    }
+  }
 }
