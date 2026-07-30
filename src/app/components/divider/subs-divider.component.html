@@ -1,0 +1,7 @@
+@let width = widthS();
+
+@if (width) {
+  <div class="divider-wrapper">
+    <div class="divider" [style.width]="width + '%'"></div>
+  </div>
+}

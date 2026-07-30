@@ -27,6 +27,7 @@ import { LocalStorage } from './services/local-storage/local-storage';
 import { LocalStorageKeys } from './services/local-storage/model/local-storage-keys.enum';
 import { translateText } from './translate-api/translate-text';
 import { checkTranslationAvailability } from './translate-api/check-translation-availability';
+import { SubsDivider } from './components/divider/subs-divider.component';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +40,7 @@ import { checkTranslationAvailability } from './translate-api/check-translation-
     MatFormField,
     MatInput,
     FormsModule,
+    SubsDivider,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

@@ -134,7 +134,9 @@
           <div class="no-subs">No subtitles, you should select subs files</div>
         }
 
-        @for (sub of subtitles.allSubtitles(); track sub.startTimeMs; let index = $index) {
+        @let subs = subtitles.allSubtitles();
+
+        @for (sub of subs; track sub.startTimeMs; let index = $index) {
           <div
             class="subs-item"
             [class.current]="sub.startTimeMs === currentSubStartTime()"
@@ -180,6 +182,11 @@
               {{ sub.secondSub }}
             </span>
           </div>
+
+          <app-subs-divider
+            [currentEndTimeMs]="sub.endTimeMs"
+            [nextStartTimeMs]="subs[index + 1]?.startTimeMs || 0"
+          />
         }
       </div>
     </div>
